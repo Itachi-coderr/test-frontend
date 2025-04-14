@@ -4,11 +4,9 @@ import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
-  withCredentials: false,
+  baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Content-Type': 'application/json'
   }
 });
 
@@ -41,26 +39,26 @@ api.interceptors.response.use(
 );
 
 export const auth = {
-  login: (credentials) => api.post('/auth/login', credentials),
-  register: (userData) => api.post('/auth/register', userData),
-  getCurrentUser: () => api.get('/auth/me'),
+  login: (credentials) => api.post('/api/auth/login', credentials),
+  register: (userData) => api.post('/api/auth/register', userData),
+  getCurrentUser: () => api.get('/api/auth/me'),
   logout: () => {
     localStorage.removeItem('token');
-    return api.post('/auth/logout');
+    return api.post('/api/auth/logout');
   },
 };
 
 export const notes = {
-  getAll: () => api.get('/notes'),
-  getById: (id) => api.get(`/notes/${id}`),
-  create: (noteData) => api.post('/notes', noteData),
-  update: (id, noteData) => api.put(`/notes/${id}`, noteData),
-  delete: (id) => api.delete(`/notes/${id}`),
-  share: (id, shareData) => api.post(`/notes/${id}/share`, shareData),
+  getAll: () => api.get('/api/notes'),
+  getById: (id) => api.get(`/api/notes/${id}`),
+  create: (noteData) => api.post('/api/notes', noteData),
+  update: (id, noteData) => api.put(`/api/notes/${id}`, noteData),
+  delete: (id) => api.delete(`/api/notes/${id}`),
+  share: (id, shareData) => api.post(`/api/notes/${id}/share`, shareData),
 };
 
 export const upload = {
-  uploadImage: (formData) => api.post('/upload/image', formData, {
+  uploadImage: (formData) => api.post('/api/upload/image', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
